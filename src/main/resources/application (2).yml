@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: api-gateway-service
+
+  cloud:
+    gateway:
+      routes:
+      - id: user-service
+        uri: http://localhost:9001/
+        predicates:
+        - Path=/userapp/**
+        filters:
+        - StripPrefix=1
+      - id: places-service
+        uri: http://localhost:9002/
+        predicates:
+        - Path=/placeapp/**
+        filters:
+        - StripPrefix=1
+        
+server:
+  port: 9000
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://101.53.134.33:8761/eureka
+    instance:
+      preferIpAddress: false
+      
